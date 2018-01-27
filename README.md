@@ -37,6 +37,12 @@ appropriate platform specific README:
 #### Linux
 
  - Linux/README ([online](https://raw.githubusercontent.com/Benjamin-Dobell/Heimdall/master/Linux/README))
+ ```sh
+( [ -d build ] || mkdir build ) && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make && cd -
+
+sudo ./build/bin/heimdall flash --verbose --usb-log-level debug --no-reboot --resume --PIT t0.pit --BOOTLOADER+RW sboot.bin --TZSW tz.img --BOOT boot.img --RECOVERY recovery.img --RADIO modem.bin --CACHE cache.img --SYSTEM system.img --HIDDEN hidden.img 
+
+```
 
 #### OS X
 

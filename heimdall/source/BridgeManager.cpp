@@ -956,6 +956,17 @@ int BridgeManager::ReceivePitFile(unsigned char **pitBuffer) const
 		delete receiveFilePartPacket;
 	}
 
+  Interface::Print("PIT file data received, read 'empty' packet...\n");
+  int dataTransferred = 0;
+  int timeout = 1000;
+  unsigned char* bufferEmpty = (unsigned char*)valloc(1);
+
+  int result = libusb_bulk_transfer(deviceHandle, inEndpoint, bufferEmpty, 1, &dataTransferred, timeout);
+
+  delete bufferEmpty;
+
+  Interface::Print("PIT file data receive completed, send kRequestEndTransfer...\n");
+
 	// End file transfer
 	pitFilePacket = new PitFilePacket(PitFilePacket::kRequestEndTransfer);
 	success = SendPacket(pitFilePacket);
